@@ -67,5 +67,11 @@ router.get('/stats', async (req, res) => {
   res.render('stats', { title: 'Post Statistics', ...stats });
 });
 
+router.get('/search', (req, res) => {  
+  res.render('search', { title: 'Search Posts' });  
+});  
+
+
+
 module.exports = router;
 
