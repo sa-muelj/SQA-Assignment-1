@@ -1,0 +1,8 @@
+extends splash 
+
+block content
+    form(action='/register', method="POST")
+        input(type="text", name="username", placeholder=username, required)
+        input(type="text", name="password", placeholder=password, required)
+        button(type="submit") Register
+    a(href="/login") Login

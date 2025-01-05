@@ -1,22 +1,18 @@
 const express = require('express');
-const router = express.Router();
+const routerBlog = express.Router();
 const { BlogPost } = require('../models');
 
-router.get('/', async (req, res) => {
-  const posts = await BlogPost.findAll();
-  res.render('index', { title: 'Blog Posts', posts });
-});
 
-router.get('/create', (req, res) => {
+routerBlog.get('/create', (req, res) => {
   res.render('create', { title: 'Create Post' });
 });
 
-router.post('/create', async (req, res) => {
+routerBlog.post('/create', async (req, res) => {
   await BlogPost.create(req.body);
   res.redirect('/');
 });
 
-router.get('/post/:id', async (req, res) => {
+routerBlog.get('/post/:id', async (req, res) => {
   const post = await BlogPost.findByPk(req.params.id);
   if (post) {
     res.render('post', { title: post.title, post });
@@ -25,7 +21,7 @@ router.get('/post/:id', async (req, res) => {
   }
 });
 
-router.get('/edit/:id', async (req, res) => {
+routerBlog.get('/edit/:id', async (req, res) => {
   const post = await BlogPost.findByPk(req.params.id);
   if (post) {
     res.render('edit', { title: 'Edit Post', post });
@@ -34,7 +30,7 @@ router.get('/edit/:id', async (req, res) => {
   }
 });
 
-router.post('/edit/:id', async (req, res) => {
+routerBlog.post('/edit/:id', async (req, res) => {
   const post = await BlogPost.findByPk(req.params.id);
   if (post) {
     await post.update(req.body);
@@ -44,7 +40,7 @@ router.post('/edit/:id', async (req, res) => {
   }
 });
 
-router.post('/delete/:id', async (req, res) => {
+routerBlog.post('/delete/:id', async (req, res) => {
   const post = await BlogPost.findByPk(req.params.id);
   if (post) {
     await post.destroy();
@@ -54,7 +50,7 @@ router.post('/delete/:id', async (req, res) => {
   }
 });
 
-router.get('/stats', async (req, res) => {
+routerBlog.get('/stats', async (req, res) => {
   const posts = await BlogPost.findAll();
   const lengths = posts.map(post => post.title.length + post.content.length);
   const stats = {
@@ -67,5 +63,11 @@ router.get('/stats', async (req, res) => {
   res.render('stats', { title: 'Post Statistics', ...stats });
 });
 
-module.exports = router;
+routerBlog.get('/search', (req, res) => {  
+  res.render('search', { title: 'Search Posts' });  
+});  
+
+
+
+module.exports = routerBlog;
 

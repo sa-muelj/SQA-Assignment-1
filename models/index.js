@@ -20,5 +20,21 @@ const BlogPost = sequelize.define('BlogPost', {
   updatedAt: false
 });
 
-module.exports = { sequelize, BlogPost };
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING(30),
+    allowNull: true
+  },
+  Password: {
+    type: DataTypes.STRING(30),
+    allowNull: true
+  }
+}, { 
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: false
+});
+
+
+module.exports = { sequelize, BlogPost, User };
 

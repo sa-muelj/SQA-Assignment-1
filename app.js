@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const { sequelize } = require('./models');
 const blogRoutes = require('./routes/blog');
+const serverRoutes = require('./routes/server');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use('/', blogRoutes);
+app.use(blogRoutes);
+app.use(serverRoutes);
 
 // Sync database and start server
 sequelize.sync().then(() => {
