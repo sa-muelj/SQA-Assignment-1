@@ -5,4 +5,8 @@ block content
         input(type="text", name="Username", placeholder=username, required)
         input(type="text", name="Password", placeholder=password, required)
         button(type="submit") Login
-    a(href="/register") Register 
+    a(href="/register") Register
+    if messages.error
+        h2  #{messages.error}
+    else 
+    

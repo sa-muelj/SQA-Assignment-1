@@ -14,7 +14,7 @@ app.set('view engine', 'pug');
 // Middleware
 // Parse URL-encoded bodies (as sent by HTML forms)
 // This middleware is needed to handle form submissions in our blog application
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
 // Serve static files from the 'public' directory
 // This middleware allows us to serve our CSS file and any other static assets
@@ -29,5 +29,5 @@ sequelize.sync().then(() => {
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });
-});
+}); 
 
