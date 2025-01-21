@@ -4,6 +4,7 @@ const { BlogPost } = require('../models');
 
 router.get('/', async (req, res) => {
   const posts = await BlogPost.findAll();
+
   res.render('index', { title: 'Blog Posts', posts });
 });
 
@@ -26,6 +27,7 @@ router.get('/post/:id', async (req, res) => {
 });
 
 router.get('/edit/:id', async (req, res) => {
+  
   const post = await BlogPost.findByPk(req.params.id);
   if (post) {
     res.render('edit', { title: 'Edit Post', post });
