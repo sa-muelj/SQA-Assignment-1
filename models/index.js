@@ -15,6 +15,7 @@ const BlogPost = sequelize.define('BlogPost', {
     allowNull: false
   }
 }, {
+  modelName: 'BlogPost',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: false
