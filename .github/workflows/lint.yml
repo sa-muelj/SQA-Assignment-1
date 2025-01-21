@@ -5,6 +5,19 @@ on: [push]
 jobs:
   eslint:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: stefanoeb/eslint-action@1.0.2
+      - uses: actions/checkout@v2  # Checkout code
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.18.1'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: |
+          npm install  # Install dependencies, including ESLint
+
+      - name: Run ESLint
+        run: |
+          npx eslint .  # Run ESLint directly via npx
