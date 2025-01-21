@@ -1,15 +1,15 @@
-const express = require('express');
-const { sequelize } = require('./models');
-const blogRoutes = require('./routes/blog');
-const process = require('process');
-const path = require('path');
+const express = require("express");
+const { sequelize } = require("./models");
+const blogRoutes = require("./routes/blog");
+const process = require("process");
+const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // View engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 // Middleware
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -18,10 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
 // This middleware allows us to serve our CSS file and any other static assets
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use('/', blogRoutes);
+app.use("/", blogRoutes);
 
 // Sync database and start server
 sequelize.sync().then(() => {

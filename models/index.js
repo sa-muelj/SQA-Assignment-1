@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const BlogPost = sequelize.define('BlogPost', {
+const BlogPost = sequelize.define("BlogPost", {
   title: {
     type: DataTypes.STRING(100),
     allowNull: false
@@ -16,7 +16,7 @@ const BlogPost = sequelize.define('BlogPost', {
   }
 }, {
   timestamps: true,
-  createdAt: 'created_at',
+  createdAt: "created_at",
   updatedAt: false
 });
 
