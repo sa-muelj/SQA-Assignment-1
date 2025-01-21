@@ -8,13 +8,15 @@
         "dev": "nodemon app.js"
     },
     "dependencies": {
-        "eslint": "^9.18.0",
         "express": "^4.17.1",
         "pug": "^3.0.2",
         "sequelize": "^6.6.5",
         "sqlite3": "^5.0.2"
     },
     "devDependencies": {
+        "@eslint/js": "^9.18.0",
+        "eslint": "^9.18.0",
+        "globals": "^15.14.0",
         "nodemon": "^2.0.12"
     }
 }
