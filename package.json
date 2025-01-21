@@ -10,11 +10,13 @@
     },
     "dependencies": {
         "express": "^4.17.1",
+        "path": "^0.12.7",
         "pug": "^3.0.2",
         "sequelize": "^6.6.5",
         "sqlite3": "^5.0.2"
     },
     "devDependencies": {
+        "@eslint/eslintrc": "^3.2.0",
         "@eslint/js": "^9.18.0",
         "eslint": "^9.18.0",
         "globals": "^15.14.0",

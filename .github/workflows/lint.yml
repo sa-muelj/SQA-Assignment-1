@@ -20,4 +20,4 @@ jobs:
 
       - name: Run ESLint
         run: |
-          npx eslint .  # Run ESLint directly via npx 
+          npx eslint --fix  # Run ESLint directly via npx 
