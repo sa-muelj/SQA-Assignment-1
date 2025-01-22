@@ -25,7 +25,7 @@ export default [...compat.extends("eslint:recommended"),  {
     },
 
     rules: {
-        indent: ["error", 2],
+        indent: ["error", 1],
         semi: ["error", "always"],
         quotes: ["error", "double"],
         "no-console": "warn",
