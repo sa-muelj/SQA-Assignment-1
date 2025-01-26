@@ -5,12 +5,13 @@ const blogRoutes = require('./routes/blog');
 const authRouter = require('./routes/auth');
 const session = require('express-session');
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 // View engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
 // Middleware
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -19,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
 // This middleware allows us to serve our CSS file and any other static assets
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Sessions
 
@@ -49,8 +50,10 @@ app.use((req, res, next) => {
 });
 
 // Routes
+
 app.use('/', blogRoutes);
 app.use('/user', authRouter);
+
 
 // Sync database and start server
 sequelize.sync().then(() => {
@@ -59,3 +62,4 @@ sequelize.sync().then(() => {
   });
 });
 
+module.exports = app;
