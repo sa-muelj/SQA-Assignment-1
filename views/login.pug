@@ -1,0 +1,9 @@
+extends layout-login
+
+block content
+  h1 Login
+  br
+  form(action="/user/login", method="POST")
+    input(type="text", name="username", placeholder="Username", required)
+    input(type="text", name="password", placeholder="Password", required)
+    button(type="submit") Login
