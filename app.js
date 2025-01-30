@@ -4,6 +4,7 @@ const { sequelize } = require('./models');
 const blogRoutes = require('./routes/blog');
 const authRouter = require('./routes/auth');
 const session = require('express-session');
+const flash = require('express-flash');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,6 +34,8 @@ app.use(session({
       maxAge: 90000           // Session expiration time (15 minutes)
   }
 }));
+
+app.use(flash());
 
 // Middleware to check if the user is authenticated
 app.use((req, res, next) => {

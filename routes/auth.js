@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session'); // required libraries
 
 authRouter.get('/register', async (req, res) => { // display register page
-    res.render('register');
+    res.render('register', { message: req.flash('message') });
 });
 
 authRouter.post('/register', async (req, res) => { // POST for registering a user
@@ -19,11 +19,15 @@ authRouter.post('/register', async (req, res) => { // POST for registering a use
             status: "FAILED",
             message: "Empty input fields provided! Please provide data for these fields"
         });
+        req.flash('message', 'Empty input fields provided! Please provide data for these fields');
+        return res.redirect('/user/register');
     } else if (password.length < 8) {              // password policy check
         console.log({
             status: "FAILED",
             message: "Password is too short! A strong password should be at least 8 characters long"
         });
+        req.flash('message', 'Password is too short! A strong password should be at least 8 characters long');
+        return res.redirect('/user/register');
     } else {                                       // Check if the user already exists
         
         const userFound = await User.findAll({     // sequelize WHERE query to retrieve usernames - unique field server side check
@@ -37,6 +41,8 @@ authRouter.post('/register', async (req, res) => { // POST for registering a use
                 status: "FAILED",
                 message: "User already exists"
             });
+        req.flash('message', 'Username already exists! Please choose another');
+            return res.redirect('/user/register');
         } else {                                   // Password encryption
             const saltRounds = 10;
             bcrypt.hash(password, saltRounds).then(async (hashedPassword) => {
@@ -45,23 +51,28 @@ authRouter.post('/register', async (req, res) => { // POST for registering a use
                         username: req.body.username, 
                         password: hashedPassword 
                     });
-                    res.redirect('/user/login');
                     console.log({
                         status: "SUCCESS",
                         message: "Account created successfully",
                         data: newUser
                     });
+                    req.flash('message', 'Account created successfully! Please log into the application');
+                    res.redirect('/user/login');
                 } catch (err) {
                     console.log({
                         status: "FAILED",
                         message: "An error occurred while creating user account"
                     });
+                    req.flash('message', 'An error occurred. Please try again');
+                    res.redirect('/user/register');
                 }
             }).catch(err => {
                 console.log({
                     status: "FAILED",
                     message: "An error occurred while hashing password"
                 });
+                req.flash('message', 'An error occurred. Please try again');
+                res.redirect('/user/register');
             });
         }
     }
@@ -72,7 +83,7 @@ authRouter.get('/login', (req, res) => {
     if (req.session && req.session.username) {
       return res.redirect('/');                    // If the user is logged in, redirect them to the home page
     }
-    res.render('login');                           // Render the login page if not logged in
+    res.render('login', { message: req.flash('message') });                           // Render the login page if not logged in
   });
   
 
@@ -84,7 +95,9 @@ authRouter.post('/login', async (req, res) => {    // POST to allow user to logi
         console.log({
             status: "FAILED",
             message: "Empty fields"
-        });
+        })
+        req.flash('message', 'Invalid username or password. Please try again!');
+        return res.redirect('/user/login');
     } else {                                       // Check if the user exists
         const userFound = await User.findAll({     // Find user requested to compare to
             where: {
@@ -109,19 +122,25 @@ authRouter.post('/login', async (req, res) => {    // POST to allow user to logi
                     console.log({
                         status: "FAILED",
                         message: "Invalid password entered"
-                    });
+                    })
+                    req.flash('message', 'Invalid username or password. Please try again!');
+                    return res.redirect('/user/login');
                 }
             }).catch((err) => {
                 console.log({
                     status: "FAILED",
                     message: "An error occurred while comparing password"
-                });
+                })
+                req.flash('message', 'An error occurred. Please try again.');
+                return res.redirect('/user/login');
             });
         } else {
             console.log({
                 status: "FAILED",
                 message: "Invalid credentials"
-            });
+            })
+            req.flash('message', 'Invalid username or password. Please try again!');
+            return res.redirect('/user/login');
         }
     }
 });
