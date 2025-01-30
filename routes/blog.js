@@ -34,7 +34,6 @@ router.get("/post/:id", async (req, res) => {
 });
 
 
-router.get('/edit/:id', async (req, res) => {
   
 
 router.get("/edit/:id", async (req, res) => {
@@ -115,4 +114,3 @@ router.get('/search', async (req, res) => {
 
 
 module.exports = router;
-
