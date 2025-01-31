@@ -11,10 +11,9 @@ authRouter.get('/register', async (req, res) => { // display register page
 authRouter.post('/register', async (req, res) => { // POST for registering a user
     let { username, password } = req.body;
     
-    username = username.trim();
-    password = password.trim();                    // removes trailing whitespaces
 
-    if (username == "" || password == "") {        // required fields server side check
+
+    if (username == "" || password == "" || username == null || password == null) {        // required fields server side check
         console.log({
             status: "FAILED",
             message: "Empty input fields provided! Please provide data for these fields"
@@ -43,9 +42,11 @@ authRouter.post('/register', async (req, res) => { // POST for registering a use
             });
         req.flash('message', 'Username already exists! Please choose another');
             return res.redirect('/user/register');
-        } else {                                   // Password encryption
+        } else {           
+            username = username.trim();
+            password = password.trim();                    // removes trailing whitespaces                      
             const saltRounds = 10;
-            bcrypt.hash(password, saltRounds).then(async (hashedPassword) => {
+            bcrypt.hash(password, saltRounds).then(async (hashedPassword) => {   // Password encryption
                 try {
                     const newUser = await User.create({ 
                         username: req.body.username, 
@@ -89,9 +90,8 @@ authRouter.get('/login', (req, res) => {
 
 authRouter.post('/login', async (req, res) => {    // POST to allow user to login
     let { username, password } = req.body;
-    username = username.trim();
-    password = password.trim();                    // Remove trailing whitespaces
-    if (username == "" || password == "") {        // Server side validation - empty fields
+  
+    if (username == "" || password == "" || username == null || password == null) {        // Server side validation - empty fields
         console.log({
             status: "FAILED",
             message: "Empty fields"
@@ -105,9 +105,11 @@ authRouter.post('/login', async (req, res) => {    // POST to allow user to logi
             },
         });
 
-        if (userFound.length !== 0) {              // if user exists, compare hashedPassword to password given
+        if (userFound.length !== 0) {  
+            username = username.trim();
+            password = password.trim();                    // Remove trailing whitespaces            
             const hashedPassword = userFound[0].password;
-            bcrypt.compare(password, hashedPassword).then((result) => {
+            bcrypt.compare(password, hashedPassword).then((result) => {     // if user exists, compare hashedPassword to password given
                 if (result) {
                     const sessionData = req.session;
                     sessionData.username = username;    // Create session and assign username to session
